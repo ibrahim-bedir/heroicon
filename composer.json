@@ -8,14 +8,12 @@
         "svg"
     ],
     "license": "MIT",
-    "authors": [
-      {
+    "authors": [{
         "name": "Alex Azartsev",
         "email": "alex.azarsecond@gmail.com",
         "homepage": "https://github.com/AlexAzartsev/heroicon",
         "role": "Developer"
-      }
-    ],
+    }],
     "require": {
         "php": ">=7.1.0",
         "laravel/nova": "^4.0"
@@ -37,10 +35,8 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-      {
+    "repositories": [{
         "type": "composer",
         "url": "https://nova.laravel.com"
-      }
-    ]
+    }]
 }

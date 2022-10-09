@@ -1,23 +1,14 @@
 <template>
   <DefaultField :field="field" :errors="errors" :show-help-text="showHelpText">
-    <template #field >
+    <template #field>
       <div class="flex flex-row">
         <div v-if="value" class="icon-preview mb-4">
           <span class="relative inline-block p-8 border border-gray-300 rounded-md">
             <span v-html="value"> </span>
             <span class="close-icon absolute top-0 right-0 cursor-pointer invisible" @click="clear">
-              <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-              >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </span>
           </span>
@@ -26,47 +17,27 @@
           <DefaultButton class="ml-2" @click.prevent="toggleModal">
             {{ openModalText }}
           </DefaultButton>
-          <DefaultButton
-              class="ml-2"
-              v-if="field.editor"
-              @click.prevent="toggleEditor"
-          >
+          <DefaultButton class="ml-2" v-if="field.editor" @click.prevent="toggleEditor">
             {{ editButtonText }}
           </DefaultButton>
         </div>
       </div>
       <transition name="fade">
-        <textarea
-            v-show="editorOpened"
-            :id="field.name"
-            type="text"
-            class="w-full form-control form-input form-input-bordered h-36 mt-2 heroicon-textarea"
-            :class="errorClasses"
-            :placeholder="field.name"
-            v-model="value"
-        />
+        <textarea v-show="editorOpened" :id="field.name" type="text"
+          class="w-full form-control form-input form-input-bordered h-36 mt-2 heroicon-textarea" :class="errorClasses"
+          :placeholder="field.name" v-model="value" />
       </transition>
 
       <Modal :show="modalOpened" @closing="closeModal" class="heroicon-modal">
         <div class="rounded-lg shadow-lg text-gray-500
-         dark:text-gray-400 bg-gray-100 dark:bg-gray-900 "
-        >
+         dark:text-gray-400 bg-gray-100 dark:bg-gray-900 ">
           <div class="px-8 py-6 border-b relative">
             <heading :level="2" class="mb-0 px-10">{{ __('Select Icon') }}</heading>
             <a href="#" class="heroicon-close" @click.prevent="closeModal">
-              <svg
-                  class="w-10 h-10"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-              >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
+              <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </a>
           </div>
@@ -74,13 +45,8 @@
             <div class="flex flex-wrap -mx-4">
               <div class="px-4" style="width: 33%">
                 <div class="flex relative">
-                  <select
-                      id="type"
-                      class="w-full form-control form-select
-                      form-select-bordered heroicons-sets-select"
-                      v-model="filter.type"
-                      :disabled="disableOptions"
-                  >
+                  <select id="type" class="w-full form-control form-select
+                      form-select-bordered heroicons-sets-select" v-model="filter.type" :disabled="disableOptions">
                     <option v-for="opt in iconOptions" :value="opt.value" :key="opt.value">
                       {{ opt.label }}
                     </option>
@@ -89,23 +55,15 @@
                 </div>
               </div>
               <div class="px-4" style="width: 66%">
-                <input
-                    type="text"
-                    id="search"
-                    class="w-full form-control form-input form-input-bordered heroicons-input"
-                    placeholder="Search icons"
-                    v-model="filter.search"
-                    @keypress.enter.prevent
-                />
+                <input type="text" id="search"
+                  class="w-full form-control form-input form-input-bordered heroicons-input"
+                  :placeholder="__('Search icons')" v-model="filter.search" @keypress.enter.prevent />
               </div>
             </div>
           </div>
           <div class="px-8 py-6 heroicon-inner">
             <div class="flex flex-wrap items-baseline -mx-2 grid-container">
-              <div
-                  v-for="icon in filteredIcons"
-                  :key="`${icon.type}_${icon.name}`"
-                  class="
+              <div v-for="icon in filteredIcons" :key="`${icon.type}_${icon.name}`" class="
                   flex flex-col flex-1
                   items-center
                   justify-center
@@ -115,9 +73,7 @@
                   cursor-pointer
                   mb-4
                   min-h-90px
-                "
-                  @click="saveIcon(icon)"
-              >
+                " @click="saveIcon(icon)">
                 <div v-html="icon.content" class="w-12 h-12 icon-container"></div>
                 <div>{{ icon.name }}</div>
               </div>
@@ -131,7 +87,7 @@
 
 <script>
 // eslint-disable-next-line import/no-unresolved
-import { FormField, HandlesValidationErrors } from 'laravel-nova';
+import { FormField, HandlesValidationErrors } from "../../../node_modules/laravel-nova";
 
 export default {
   mixins: [FormField, HandlesValidationErrors],
@@ -205,19 +161,19 @@ export default {
     },
     editButtonText() {
       if (this.editorOpened) {
-        return 'Close';
+        return this.__('Close');
       }
-      return 'Edit';
+      return this.__('Edit');
     },
     openModalText() {
       if (this.value) {
-        return 'Change icon';
+        return this.__('Change icon');
       }
-      return 'Add icon';
+      return this.__('Add icon');
     },
     iconOptions() {
       if (this.field.icons.length > 1) {
-        return [{ value: '', label: 'All' }, ...this.field.icons];
+        return [{ value: '', label: this.__('All') }, ...this.field.icons];
       }
       return this.field.icons;
     },
@@ -240,7 +196,7 @@ export default {
   height: 60px;
 }
 
-.icon-container > svg {
+.icon-container>svg {
   max-height: 100%;
   max-width: 100%;
   padding-bottom: 10px;
@@ -269,11 +225,13 @@ export default {
   max-width: 80%;
   overflow: hidden;
 }
+
 .dark .heroicon-modal {
   border-width: 2px;
   border-radius: 5px;
 }
-.heroicon-modal > div {
+
+.heroicon-modal>div {
   overflow: hidden;
 }
 
@@ -297,6 +255,7 @@ export default {
   border-color: var(--colors-gray-200);
   color: rgba(var(--colors-gray-400), var(--tw-text-opacity));
 }
+
 .dark .heroicons-sets-select,
 .dark .heroicons-input {
   border-color: var(--colors-gray-200);
